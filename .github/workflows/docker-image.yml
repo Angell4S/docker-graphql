@@ -34,25 +34,28 @@ jobs:
       env:
         DOCKER_USER: ${{ secrets.DOCKER_USER }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-        # Creando variable de entorno para usar en otros pasos el versionador
-        NEW_VERSION: ${{ steps.version.outputs.version }}
       run: |
         echo "Iniciando Login"
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
         echo "Fin del Login"
-        echo "Nueva Version: $NEW_VERSION !!!!!!!!!"
         
-# #Tercer paso, construir la imagen
-#     - name: Build Docker Image
-#       run: |
-#          docker build -t focusroot/docker-graphql:0.0.2 .
-#          docker build -t focusroot/docker-graphql:latest .
+#Tercer paso, construir la imagen
+    - name: Build Docker Image
+      env:
+        # Creando variable de entorno para usar el versionador
+        NEW_VERSION: ${{ steps.version.outputs.version }}
+      run: |
+         docker build -t focusroot/docker-graphql:$NEW_VERSION .
+         docker build -t focusroot/docker-graphql:latest .
          
-# #Cuarto paso, hacer push de la imagen es decir subir la imagen a dockerhub
-#     - name: Push Docker Image
-#       run: |
-#          docker push focusroot/docker-graphql:0.0.2
-#          docker push focusroot/docker-graphql:latest
+#Cuarto paso, hacer push de la imagen es decir subir la imagen a dockerhub
+    - name: Push Docker Image
+      env:
+        # Creando variable de entorno para usar el versionador
+        NEW_VERSION: ${{ steps.version.outputs.version }}
+      run: |
+         docker push focusroot/docker-graphql:$NEW_VERSION
+         docker push focusroot/docker-graphql:latest
 
 
 
