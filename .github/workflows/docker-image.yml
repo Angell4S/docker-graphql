@@ -33,11 +33,13 @@ jobs:
     - name: Build Docker Image
       run: |
          docker build -t focusroot/docker-graphql:0.0.2 .
+         docker build -t focusroot/docker-graphql:latest .
          
 #Cuarto paso, hacer push de la imagen es decir subir la imagen a dockerhub
     - name: Push Docker Image
       run: |
          docker push focusroot/docker-graphql:0.0.2
+         docker push focusroot/docker-graphql:latest
     
     # - name: Build the Docker image
     #   run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
