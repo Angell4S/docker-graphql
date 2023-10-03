@@ -29,11 +29,12 @@ jobs:
 
 
         
-# Segundo paso, probar mi autenticación con dockerhub - Creando variable de entorno para usar en otros pasos el versionador
+# Segundo paso, probar mi autenticación con dockerhub
     - name: Docker Login
       env:
         DOCKER_USER: ${{ secrets.DOCKER_USER }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        # Creando variable de entorno para usar en otros pasos el versionador
         NEW_VERSION: ${{ steps.version.outputs.version }}
       run: |
         echo "Iniciando Login"
